@@ -1,0 +1,373 @@
+Theory Assignment 02
+	Marks
+
+
+1. Between array based stack implementation and linked-list based stack implementation which is better when I need random access in the stack? Explain the reasons.										      15
+
+Ans:
+
+I believe in the case of random access array based stack implementation is better than linked-list based stack implementation.
+
+For linked-list based stack implementation when we want to access any random index, the linked-list does not keep track of all the index. It only tracks the head node and tail node.
+
+So if we want to access n’th index we need to loop through nodes and get to the n’th index. The time complexity for that will be O(n).
+
+But in case of Array based stack implementation if we want to access n’th index we can access it from the array on O(1) time complexity because An array is a contiguous memory location.
+
+Therefore O(1) is better than O(n), for random access we should use array based stack implementation. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.  What is the time complexity of push, pop and top operations in a stack?	      10
+
+Ans:
+
+Time complexity for,
+
+push() → O(1); // Only one operation needed to push an item on top
+pop() → O(1); // Only one operation needed to remove an item from top
+top() → O(1); // Only one operation needed to show the item on top
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3. Suppose you need a stack of characters, a stack of integers and a stack of real numbers. How will you implement this scenario using a single stack?	      15
+
+Ans:
+
+I would use c++ template class feature to implement a stack so that I can use a stack of characters, a stack of integers and a stack of real numbers using a single stack.
+
+For example:
+
+#include<bits/stdc++.h>
+using namespace std;
+
+// Template Based stack using Dynamic Array
+template <class T>
+class Stack
+{
+public:
+    T *a;
+    int stack_size;
+    int array_cap;
+
+    Stack()
+    {
+        a = new T[1];
+        array_cap = 1;
+        stack_size = 0;
+    }
+
+    // Makes the Array capacity * 2
+    void increase_size()
+    {
+        T * tmp;
+        tmp = new T[array_cap * 2];
+        for(int i = 0; i < array_cap; i++)
+            tmp[i] = a[i];
+
+        swap(a, tmp);
+
+        delete []tmp;
+        array_cap = array_cap * 2;
+    }
+
+    // Add an Element in the stack. O(1)
+    void push(T val)
+    {
+        if(stack_size + 1 > array_cap){
+            increase_size();
+        }
+        stack_size ++;
+        a[stack_size - 1] = val;
+    }
+
+    // Delete the top most element
+    void pop()
+    {
+        if(stack_size == 0){
+            cout << "Stack is empty \n";
+            return;
+        }
+        //a[stack_size - 1] = 0;
+        stack_size --;
+    }
+
+    // Returns Top Element of Stack
+    T top()
+    {
+        if(stack_size == 0){
+            cout << "Stack Size is Empty \n";
+            //assert(false);
+            T a;
+            return a;
+        }
+        return a[stack_size - 1];
+
+    }
+};
+
+int main()
+{
+    Stack <int> st_int;
+    Stack <char> st_char;
+    Stack <double> st_real;
+ 
+    st_int.push(5);
+    st_char.push(‘a’);
+    st_real.push(3.5);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4. What is a postfix expression and why do we need it? How is it evaluated using a stack for the below example? You need to show all the steps.  		      15
+abc*+de*+
+
+Ans:
+
+A postfix expression  is the notation in which operators are placed after the corresponding operands in the expression. 
+
+We need postfix notations when we require operators after the operands. In some cases it is more convenient to evaluate a postfix expression rather than prefix or infix expression. For those cases postfix expression can be really helpful.
+
+Postfix notations are easier to parse for a machine so computer programs use postfix notation for expression evaluation.
+
+Postfix notations can be used in intermediate code generation in compiler design.
+
+Postfix notation helps remove the problem of operator precedence.
+
+
+To evaluate  abc*+de*+  expression we need a stack st and the input string s, and temporary character, char now.
+
+First we loop through the string elements and put,  now = s[i] .
+
+
+If now == operand we keep pushing operand to the stack.
+
+
+If now == operator, pop two elements from the stack perform the operation and push the result on the stack.
+
+Now the process:
+a b c * + d e * +
+st = [ a, b, c ] ,now = *
+c * b = t1, st = [ a, t1 ], now = +
+t1 + a = t2, st = [ t2, d, e ], now = *
+e + d = t3, st = [ t2, t3 ], now = +
+t3 + t2 = t4, st = [ t4 ]
+
+
+
+
+
+5. Simulate balanced parentheses check using stack for the below example. You need to show all the steps.								      15
+( ( [ ][ ]{ ( ) } ) )
+
+Ans:
+
+We need a stack st and the input string s, and temporary character, char now
+
+The steps:
+First we loop through the string elements and put,  now = s[i].
+
+
+If now == opening parenthesis (// (, {, [ //) push on the stack 
+
+
+Else, 
+
+1. check if stack is empty then return invalid sequence. // stack has closing parenthesis only.
+
+2. Else If now == closing parenthesis (// ), }, ] //)  and st.top == same type opening parenthesis then st.pop().
+
+
+Finally check if stack is empty then return valid sequence else return Invalid sequence.
+
+The Process:  ( ( [ ][ ]{ ( ) } ) )
+
+st = [ ‘(‘, ‘(‘, ‘[‘ ], now = ‘]’
+st.top() = ‘[‘ && now = ‘]’ so st.pop();
+st = [ ‘(‘, ‘(‘, ‘[‘ ] ,now = ‘]’
+st.top() = ‘[‘ && now = ‘]’ so st.pop();
+st = [ ‘(‘, ‘(‘, ‘{‘, ‘(’ ] ,now = ‘)’
+st.top() = ‘(‘ && now = ‘)’ so st.pop();
+st.top() = ‘{‘ && now = ‘}’ so st.pop();
+st.top() = ‘(‘ && now = ‘)’ so st.pop();
+st.top() = ‘(‘ && now = ‘)’ so st.pop();
+Stack Empty, Valid Sequence.
+
+
+
+
+
+6. Sort a stack of integers using another stack for the below example. You need to show all the steps.									      15
+Stack -> [3,4,6,2,5]
+
+Ans:
+
+To sort all the elements inside a stack a, we need another temporary stack tmp, and a temporary variable int t.
+
+The steps:
+
+We take a while loop through stack a, until the size is greater than zero.
+
+
+Take top value into t, t = a.top() and remove the top, a.pop().
+
+
+If tmp.getSize() > 0 follow step 4, Else push t on the temp stack, tmp.push(t)
+
+
+While tmp.getSize() > 0,
+
+1. If,  tmp.top() < t we break the while loop
+	2. Else push top of tmp on the stack then pop from tmp and repeat.
+
+Finally tmp has sorted values so swap with a. swap(a, tmp);
+
+
+
+The Steps: Stack a -> [3,4,6,2,5]
+
+tmp = [ 5 ], a = [3 , 4, 6, 2], t = 5 // tmp was empty so push t and pop from a.
+tmp = [ 2 ], a = [3, 4, 6, 5], t = 2 // tmp.top() = 5 > t = 2 while tmp.top() < t, pop from tmp, push a
+tmp = [2 , 5], a = [3 , 4, 6], t = 5 // tmp.top() = 2  < t = 5, so pop from a, push tmp
+tmp = [2, 5, 6], a = [3, 4], t = 6 // tmp,top() = 5 < t = 6, so pop from a, push tmp
+tmp = [2, 4], a = [3, 5, 6], t = 4 // tmp.top() = 6 > t = 4 while tmp.top() < t , pop from tmp, push a
+tmp = [2, 4, 6], a = [3, 5], t = 6 // tmp.top() = 4  < t = 6, so pop from a, push tmp.
+tmp = [2, 4, 5], a = [3, 6], t = 5 // tmp.top() = 6 > t = 5 while tmp.top() < t , pop from tmp, push a
+tmp = [2, 4, 5, 6] a = [3], t = 6 // tmp.top() = 5  < t = 6, so pop from a, push tmp.
+tmp = [2, 3] a = [6, 5, 4], t= 3 // tmp.top() = 6 > t = 3 while tmp.top() < t , pop from tmp, push a
+tmp = [2, 3, 4], a = [ 6, 5], t = 4 // tmp.top() = 3  < t = 4, so pop from a, push tmp
+tmp = [2, 3, 4, 5], a = [ 6], t = 5 // tmp.top() = 4  < t = 5, so pop from a, push tmp
+tmp = [2, 3, 4, 5 ,6], a = [ ], t = 6 // tmp.top() = 5  < t = 6, so pop from a, push tmp
+a = [2, 3, 4, 5 ,6] //a is empty and tmp is sorted so swap(a, tmp) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7. Convert the infix expression to postfix expression using a stack. You need to show all the steps.									      15
+a+b*c+d*e
+
+Ans:
+
+To convert infix expression to postfix expression we need input string s, a stack st, and ans string and  temporary character now.
+
+The steps:
+
+Loop through input string s, put now = current character.
+
+
+If now == operand ( ‘a’ to ‘z’ ), add now to ans, ans += now.
+
+
+Else 
+If stack.getSize() > 0 and precedence of st.top() >= precedence of now, ans += st.top(), st.pop()
+Push now on top of stack, st.push(now);
+
+Add the remaining stack elements to the ans.
+
+The Process:  a+b*c+d*e
+
+ ans = a, now = a, st = [ ] // now = operand so add to ans
+ans = a, now = + , st = [ ‘+’ ] // now = ‘+’ and st is empty so st.push(now)
+ans = ab, now = b, st = [ ‘+’ ] // now = operand so add to ans
+ans = ab, now = *, st = [ ‘+’, ‘*’ ] // now = ‘*’ and prec(st.top()) < prec(now), st.push(now)
+ans = abc, now = c, st = [ ‘+’, ‘*’ ] // now = operand so add to ans 
+ans = abc*+, now = +, st = [ ‘+’ ] //  now = ‘+’ and prec(st.top()) >= prec(now), ans += st.top(), st.pop(),  after while loop ends st.push(now)
+ans = abc*+d, now = c, st = [ ‘+’] // now = operand so add to ans
+ans = abc*+d, now = *, st = [ ‘+’, ‘*’ ] // now = ‘*’ and prec(st.top()) < prec(now), st.push(now)
+ans = abc*+de, now = e, st = [ ‘+’, ‘*’ ] // now = operand so add to ans
+ans = abc*+de*+ // add the remaining stack elements to the ans
