@@ -88,6 +88,17 @@ public:
         }
     }
 
+    void DFS(node * a)
+    {
+        // Base case
+        if(a == NULL) return;
+
+        cout << a->id << " ";
+
+        DFS(a->left);
+        DFS(a->right);
+    }
+
 };
 
 int main()
@@ -95,6 +106,7 @@ int main()
     BinaryTree bt;
     bt.build_binary_tree();
     bt.BFS();
+    bt.DFS(bt.root);
     return 0;
 }
 
