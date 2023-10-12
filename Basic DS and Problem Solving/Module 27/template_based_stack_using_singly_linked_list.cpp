@@ -8,16 +8,15 @@ class node
 public:
     T data;
     node * nxt;
-    node * prv;
 };
 
 template <class T>
-class DoublyLinkedList
+class SinglyLinkedList
 {
 public:
     node<T> *head;
     int sz;
-    DoublyLinkedList()
+    SinglyLinkedList()
     {
         head = NULL;
         sz = 0;
@@ -29,7 +28,6 @@ public:
         node<T> *newnode = new node<T>;
         newnode->data = data;
         newnode->nxt = NULL;
-        newnode->prv = NULL;
         return newnode;
     }
 
@@ -45,21 +43,20 @@ public:
         }
         node<T> *a = head;
         newnode->nxt = a;
-        a->prv = newnode;
         head = newnode;
+        return;
     }
 
 
     //Prints the linked list O(n)
     void Traverse()
     {
-        node<T> *a = head;
-        while(a != NULL)
-        {
-            cout<< a->data <<" ";
+        node <T> * a = head;
+        while(a != NULL){
+            cout << a->data <<" ";
             a = a->nxt;
         }
-        cout<<"\n";
+        cout << "\n";
     }
 
     // Returns the size of linked list O(1)
@@ -80,8 +77,6 @@ public:
 
         delete a;
 
-        if(b!= NULL) b->prv = NULL;
-
         head = b;
         sz--;
     }
@@ -95,7 +90,7 @@ class Stack
 {
 public:
 
-    DoublyLinkedList<T> dl;
+    SinglyLinkedList <T> sl;
 
     Stack()
     {
@@ -104,43 +99,54 @@ public:
 
     T top()
     {
-        if(dl.getSize() == 0){
-            cout << "Stack Empty\n";
+        if(sl.getSize() <= 0){
+            cout << "Stack Empty, no element on top, Returning garbage value: ";
             T a;
             return a;
         }
-        return dl.head->data;
+        else{
+            return sl.head->data;
 
+        }
     }
 
     void push(T item)
     {
-        dl.InsertAtHead(item);
+        sl.InsertAtHead(item);
     }
 
     void pop()
     {
-        if(dl.getSize() == 0){
-            cout << "Stack Empty\n";
-            return ;
+        if(sl.getSize() <= 0){
+            cout << "Stack Empty cannot pop \n";
+            return;
         }
-        dl.deleteAtHead();
+        else{
+            sl.deleteAtHead();
+        }
+
+    }
+
+    void print_stack()
+    {
+        sl.Traverse();
     }
 };
 
 
 int main()
 {
-    Stack <int> st;
-    st.push(3);
+    Stack <char> st;
+    st.push('A');
+    //cout << st.top() << "\n";
+    st.push('B');
+    st.push('C');
+    st.push('D');
+    st.push('E');
+    st.push('F');
+    st.push('G');
     cout << st.top() << "\n";
-    st.push(5);
-    st.push(7);
-    st.push(2);
-    st.push(1);
-    st.push(100);
-    st.push(4);
-    cout << st.top() << "\n";
+    st.print_stack();
     st.pop();
     cout << st.top() << "\n";
     st.pop();
@@ -151,8 +157,13 @@ int main()
     st.pop();
     st.pop();
 
+    st.print_stack();
 
-    cout << st.top() << "\n";
+
+    cout << st.top() << " ";
+
+    st.print_stack();
 
     return 0;
 }
+

@@ -1,20 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MAX_SIZE = 500;
-
-
+template < class T >
 class Queue
 {
 public:
-    int *a;
+    T *a;
     int array_cap;
     int l, r;
     int sz;
 
     Queue()
     {
-        a = new int[1];
+        a = new T[1];
         array_cap = 1;
         l = 0;
         r = -1;
@@ -23,9 +21,8 @@ public:
 
     void remove_circular()
     {
-        if(l>r)
-        {
-            int *tmp = new int[array_cap];
+        if(l>r){
+            T *tmp = new T[array_cap];
             int idx = 0;
             for(int i=l; i<array_cap; i++)
             {
@@ -49,7 +46,7 @@ public:
         remove_circular();
         // size increase
 
-        int *tmp = new int[array_cap*2];
+        T *tmp = new T[array_cap*2];
 
         for(int i=0;i<array_cap;i++){
             tmp[i] = a[i];
@@ -62,7 +59,7 @@ public:
         delete [] tmp;
     }
 
-    void enqueue(int val)
+    void enqueue(T val)
     {
         if(sz == array_cap){
             increase_size();
@@ -76,7 +73,7 @@ public:
         sz ++;
     }
 
-    void dequeue ()
+    void dequeue()
     {
         if( sz == 0 ){
             increase_size();
@@ -89,11 +86,11 @@ public:
         sz --;
     }
 
-    int front_element()
+    T front_element()
     {
         if(sz == 0){
-            cout << "Queue is Empty ";
-            return -1;
+            cout << "Empty Queue! ";
+            return 0;
         }
         return a[l];
     }
@@ -109,25 +106,19 @@ public:
 
 int main()
 {
-    Queue q;
+    Queue <char> q;
     cout << "Queue Size: " <<q.queue_size()<<"\n";
     cout << "Front Element: " <<q.front_element()<<"\n";
+    q.enqueue('A');
+    q.enqueue('B');
+    q.enqueue('C');
+    q.enqueue('D');
 
-    q.enqueue(5);
-    cout << "Queue Size: " <<q.queue_size()<<"\n";
-    q.enqueue(6);
-    cout << "Queue Size: " <<q.queue_size()<<"\n";
-    q.enqueue(7);
-    cout << "Queue Size: " <<q.queue_size()<<"\n";
-    q.enqueue(8);
+    cout << "Front Element: " <<q.front_element()<<"\n";
     cout << "Queue Size: " <<q.queue_size()<<"\n";
     q.dequeue();
     cout << "Queue Size: " <<q.queue_size()<<"\n";
-    q.dequeue();
-    q.dequeue();
-    q.dequeue();
 
-    cout << "Queue Size: " <<q.queue_size()<<"\n";
     cout << "Front Element: " <<q.front_element()<<"\n";
     return 0;
 }

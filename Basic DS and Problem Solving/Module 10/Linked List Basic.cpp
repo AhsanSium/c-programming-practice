@@ -85,9 +85,12 @@ public:
     void Traverse()
     {
         node * a = head;
+        int cnt = 1;
         while(a != NULL){
             cout<< a->data << " ";
+            cout<<", cnt = " << cnt<<" | ";
             a = a->nxt;
+            cnt++;
         }
         cout << "\n";
     }
@@ -208,9 +211,9 @@ public:
         node * a = head;
 
         while(a != NULL){
-            node i = a->nxt;
+            node * i = a->nxt;
             while(i != NULL){
-                node b = i->nxt;
+                node * b = i->nxt;
                 if(i->data > b->data){
 
                 }
@@ -225,36 +228,36 @@ public:
 int main()
 {
     LinkedList l;
-    cout<<l.getSize()<<"\n";
+    //cout<<l.getSize()<<"\n";
     l.InsertAtHead(5);
-    cout<<l.getSize()<<"\n";
+    //cout<<l.getSize()<<"\n";
     l.InsertAtHead(6);
     l.InsertAtHead(30);
-    cout<<l.getSize()<<"\n";
+    //cout<<l.getSize()<<"\n";
     l.InsertAtHead(20);
     l.InsertAtHead(30);
 
-    cout<<l.getValue(2)<<"\n";
+    //cout<<l.getValue(2)<<"\n";
 
-    cout<<l.getValue(6)<<"\n";
+    //cout<<l.getValue(6)<<"\n";
 
-    l.printReverse();
+    //l.printReverse();
     l.Traverse();
-    l.swapFirst();
-    l.Traverse();
-    l.printReverse();
-
-    l.insertAtAnyIndex(1, 76);
-    l.Traverse();
-    l.deleteAtHead();
-    l.Traverse();
-
-    l.deleteAnyIndex(2);
-    l.Traverse();
-    l.getSize();
-
-    l.insertAfterValue(60, 60);
-    l.Traverse();
+//    l.swapFirst();
+//    l.Traverse();
+//    l.printReverse();
+//
+//    l.insertAtAnyIndex(1, 76);
+//    l.Traverse();
+//    l.deleteAtHead();
+//    l.Traverse();
+//
+//    l.deleteAnyIndex(2);
+//    l.Traverse();
+//    l.getSize();
+//
+//    l.insertAfterValue(60, 60);
+//    l.Traverse();
 
 
     return 0;
