@@ -78,6 +78,18 @@ public:
     {
         return sz;
     }
+
+    //Prints the linked list O(n)
+    void Traverse()
+    {
+        node *a = head;
+        while(a != NULL)
+        {
+            cout<< a->data <<" ";
+            a = a->nxt;
+        }
+        cout<<"\n";
+    }
 };
 
 int main()
@@ -87,6 +99,8 @@ int main()
     q.enqueue(15);
     q.enqueue(25);
     q.enqueue(35);
+
+    q.Traverse();
 
     cout << "Queue Front = " << q.front_element()<<"\n";
     cout << "Queue Size = " << q.queue_size()<<"\n";
