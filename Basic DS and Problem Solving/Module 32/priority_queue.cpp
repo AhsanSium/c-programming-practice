@@ -104,6 +104,11 @@ public:
             down_heapify(i);
         }
      }
+
+     int size()
+     {
+         return nodes.size();
+     }
 };
 
 // O (n log n )
@@ -123,18 +128,56 @@ vector <int> heap_sort(vector<int>a)
     return ans;
 }
 
+class Priority_Queue
+{
+public:
+    MAX_Heap h;
+    Priority_Queue(){}
+
+    void push(int x)
+    {
+        h.insert_heap(x);
+    }
+
+    void pop()
+    {
+        h.delete_from_heap(0);
+    }
+
+    int top()
+    {
+        return h.get_max();
+    }
+
+    int size()
+    {
+        return h.size();
+    }
+};
+
 int main()
 {
-    vector <int> a = {1, 2, 3, 4, 10, 9, 5, 7};
+    Priority_Queue pq;
 
-    vector<int> sorted_a = heap_sort(a);
+    pq.push(5);
+    pq.push(15);
+    pq.push(25);
+    pq.push(35);
+    pq.push(45);
+    pq.push(55);
 
-    for(int i = 0; i < sorted_a.size(); i++){
-        cout << sorted_a[i] << " ";
+
+    cout << pq.top();
+    cout << "\n";
+
+    while(pq.size() != 0){
+        cout << pq.top() << " ";
+        pq.pop();
     }
     cout << "\n";
 
     return 0;
 }
+
 
 
