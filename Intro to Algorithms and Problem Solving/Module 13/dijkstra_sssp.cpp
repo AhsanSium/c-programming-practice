@@ -8,6 +8,7 @@ const int INF = 1e9;
 
 vector < pair <int, int> > adj_list[N];
 int d[N], visited[N]; // distance and visited array
+int nodes, edges;
 /*
     w
 u ----> v
@@ -49,7 +50,6 @@ void dijkstra(int src)
 
 int main ()
 {
-    int nodes, edges;
     cin >> nodes >> edges;
 
     for(int i = 0; i < edges; i++){
@@ -63,7 +63,7 @@ int main ()
     dijkstra(src);
 
     for(int i = 1; i <= nodes; i++){
-        cout << d[i] << " "
+        cout << d[i] << " ";
     }
     cout << "\n";
 
