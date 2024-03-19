@@ -19,8 +19,6 @@ void bfs(int src)
         int head = q.front();
         q.pop();
 
-        // cout << head << endl;
-
         for(int adj_node: adj_list[head]){
             if(visited[adj_node] == 0){
                 visited[adj_node] = 1;
@@ -33,28 +31,31 @@ void bfs(int src)
 
 /*
 
-0 ---- 1 ---- 2 ---- 3
-       |      |
-       |      |
-       5 ---- 4
-
-Output -> 0 1 5 2 4 3
-
-
 # of node -> 6
-# of edge -> 6
+# of edge -> 7
 
-list of adj_nodes ->
 
 // node edge
-6 6
+// list of adj_nodes
+
+6 7
 
 0 1
-2 3
+0 3
+0 4
+1 2
 1 5
 2 4
 5 4
-1 2
+
+Output ->
+
+node 0 -> level: 0
+node 1 -> level: 1
+node 2 -> level: 2
+node 3 -> level: 1
+node 4 -> level: 1
+node 5 -> level: 2
 
 
 */
@@ -77,10 +78,11 @@ int main()
 
     bfs(src);
 
-    for(int i = 0; i <= nodes; i++){
-        cout << "Node " << i << " -> level: " << level[i] << endl;
+    for(int i = 0; i < nodes; i++){
+        cout << "node " << i << " -> level: " << level[i] << endl;
     }
 
     return 0;
 }
+
 

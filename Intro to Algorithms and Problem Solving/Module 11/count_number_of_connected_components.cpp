@@ -3,7 +3,6 @@ using namespace std;
 
 const int N = 1e5;
 int visited[N];
-int level[N];
 
 vector<int>adj_list[N];
 
@@ -12,19 +11,15 @@ void bfs(int src)
     queue <int> q;
 
     visited[src] = 1;
-    level[src] = 0;
     q.push(src);
 
     while(!q.empty()){
         int head = q.front();
         q.pop();
 
-        // cout << head << endl;
-
         for(int adj_node: adj_list[head]){
             if(visited[adj_node] == 0){
                 visited[adj_node] = 1;
-                level[adj_node] = level[head] + 1; // level added
                 q.push(adj_node);
             }
         }
@@ -33,29 +28,17 @@ void bfs(int src)
 
 /*
 
-0 ---- 1 ---- 2 ---- 3
-       |      |
-       |      |
-       5 ---- 4
 
-Output -> 0 1 5 2 4 3
-
-
-# of node -> 6
-# of edge -> 6
+# of node -> 5
+# of edge -> 3
 
 list of adj_nodes ->
-
 // node edge
-6 6
+5 3
 
 0 1
-2 3
-1 5
-2 4
-5 4
 1 2
-
+2 0
 
 */
 
@@ -73,14 +56,16 @@ int main()
         adj_list[v].push_back(u);
     }
 
-    int src = 0;
-
-    bfs(src);
-
-    for(int i = 0; i <= nodes; i++){
-        cout << "Node " << i << " -> level: " << level[i] << endl;
+    int components = 0;
+    for(int i = 0; i < nodes; i++){
+        if(visited[i] == 0){
+            int src = 0;
+            bfs(src);
+            components ++;
+        }
     }
+
+    cout << components << "\n";
 
     return 0;
 }
-
