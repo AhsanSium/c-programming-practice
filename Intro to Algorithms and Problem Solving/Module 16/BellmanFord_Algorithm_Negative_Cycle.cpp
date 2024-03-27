@@ -25,9 +25,10 @@ int main()
 
     int src = 1;
     d[src] = 0;
+    bool negative_cycle = false;
 
     // O(n)
-    for(int i = 0; i <= n - 1; i++){
+    for(int i = 1; i <= n; i++){
 
         // O(E)
         for(int node = 1; node <= n; node++){
@@ -38,14 +39,23 @@ int main()
 
                 if(d[u] + w < d[v]){
                     d[v] = d[u] + w;
+                    if(i == n){
+                        negative_cycle = true;
+                    }
                 }
             }
         }
     }
 
-    for(int i = 1; i <= n; i++){
-        cout << d[i] << " ";
+    if(negative_cycle == true){
+        cout << "Graph has negative cycle: \n";
+    }
+    else{
+        for(int i = 1; i <= n; i++){
+            cout << d[i] << " ";
+        }
     }
 
     return 0;
 }
+
