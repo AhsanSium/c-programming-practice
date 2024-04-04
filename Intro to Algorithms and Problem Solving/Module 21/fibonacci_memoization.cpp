@@ -13,6 +13,7 @@ long long dp[N];
 long long fib(int n)
 {
     // 1. handle base case
+    if(n == 0){return 0;}
     if(n <= 2) return 1;
 
     // 2. if current state is already solved return result

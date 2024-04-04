@@ -2,11 +2,9 @@
 using namespace std;
 const int N = 101;
 /*
-
  - 1. Define state: fib(n) -> calculates the n'th fibonacci number
  - 2. Recursive Equation: fib(n - 1) + fib(n - 2)
  - 3. Base case: fib(1) = 1, fib(2) = 1
-
 */
 
 long long dp[N];
